@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es5",
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "declaration": true, // generate .d.ts files
+    "declarationMap": true,
+    "noImplicitAny": true,
+    "noImplicitThis": false,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+    "downlevelIteration": true,
+    "lib": ["es2015", "es2016", "dom"],
+    "pretty": true,
+    "strict": true,
+    "baseUrl": ".",
+    "outDir": "dist",
+    "types": ["jasmine", "node"]
+  },
+  "include": ["spec"]
+}

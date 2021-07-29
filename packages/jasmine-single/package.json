@@ -1,0 +1,61 @@
+{
+  "name": "@hirez_io/jasmine-single",
+  "version": "1.0.0-alpha.0",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.com"
+  },
+  "author": {
+    "name": "Shai Reznik",
+    "company": "HiRez.io"
+  },
+  "description": "A Jasmine addon that helps you write 'Single-Action Tests' by breaking them into a given / when / then structure.",
+  "keywords": [
+    "jasmine",
+    "jasmine-single",
+    "gwt",
+    "Given When Then",
+    "Microtests",
+    "Single Action Tests",
+    "Angular Tests",
+    "Testing",
+    "Unit tests",
+    "JavasScript Unit Tests",
+    "TypeScript Unit Tests",
+    "hirez.io"
+  ],
+  "homepage": "https://github.com/hirezio/single/tree/main/packages/jasmine-single",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hirezio/single",
+    "directory": "packages/jasmine-single"
+  },
+  "license": "MIT",
+  "source": "temp-src/jasmine-single.ts",
+  "main": "dist/jasmine-single.js",
+  "types": "dist/jasmine-single.d.ts",
+  "scripts": {
+    "clean": "rimraf dist",
+    "clean:temp-src": "rimraf temp-src",
+    "copy:shared-source": "cpy ../../shared/single-core/single-core.ts ./temp-src/ --rename=jasmine-single.ts",
+    "compile": "microbundle -f iife --tsconfig tsconfig.build.json --compress false",
+    "build": "run-s clean copy:shared-source compile clean:temp-src",
+    "test": "echo \n*** Run tests from the root folder\n"
+  },
+  "dependencies": {
+    "@hirez_io/karma-jasmine-single": "^1.0.0-alpha.0"
+  },
+  "peerDependencies": {
+    "jasmine-core": "< 4.x"
+  },
+  "devDependencies": {
+    "@types/jasmine": "3.8.1",
+    "cpy-cli": "^3.1.1",
+    "jasmine": "3.8.0",
+    "microbundle": "^0.13.3",
+    "nodemon": "2.0.12",
+    "nyc": "15.1.0",
+    "source-map-support": "^0.5.19",
+    "tsconfig-paths": "3.10.1"
+  }
+}

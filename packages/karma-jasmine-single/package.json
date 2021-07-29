@@ -1,0 +1,47 @@
+{
+  "name": "@hirez_io/karma-jasmine-single",
+  "version": "1.0.0-alpha.0",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.com"
+  },
+  "author": {
+    "name": "Shai Reznik",
+    "company": "HiRez.io"
+  },
+  "description": "A karma plugin for loading @hirez_io/jasmine-single",
+  "keywords": [
+    "jasmine",
+    "jasmine-single",
+    "jasmine-karma",
+    "karma",
+    "gwt",
+    "Given When Then",
+    "Microtests",
+    "Testing",
+    "Unit tests",
+    "JavasScript Unit Tests",
+    "TypeScript Unit Tests",
+    "hirez.io"
+  ],
+  "homepage": "https://github.com/hirezio/single/tree/main/packages/karma-jasmine-single",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hirezio/single",
+    "directory": "packages/karma-jasmine-single"
+  },
+  "license": "MIT",
+  "main": "lib/karma-jasmine-single.js",
+  "scripts": {
+    "build": "echo build is not needed for the karma plugin",
+    "test": "karma start"
+  },
+  "bugs": {
+    "url": "https://github.com/shairez/single/issues"
+  },
+  "devDependencies": {
+    "karma": "6.3.4",
+    "karma-chrome-launcher": "3.1.0",
+    "karma-jasmine": "4.0.1"
+  }
+}

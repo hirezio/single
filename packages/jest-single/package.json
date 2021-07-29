@@ -1,0 +1,52 @@
+{
+  "name": "@hirez_io/jest-single",
+  "version": "1.0.0-alpha.0",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.com"
+  },
+  "author": {
+    "name": "Shai Reznik",
+    "company": "HiRez.io"
+  },
+  "description": "A jest addon that helps you write 'Single-Action Tests' by breaking them into a given / when / then structure.",
+  "keywords": [
+    "jest",
+    "jest-single",
+    "gwt",
+    "Given When Then",
+    "Microtests",
+    "Testing",
+    "Unit tests",
+    "JavasScript Unit Tests",
+    "TypeScript Unit Tests",
+    "hirez.io"
+  ],
+  "homepage": "https://github.com/hirezio/single/tree/main/packages/jest-single",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hirezio/single",
+    "directory": "packages/jest-single"
+  },
+  "license": "MIT",
+  "main": "dist/jest-single.js",
+  "types": "dist/jest-single.d.ts",
+  "scripts": {
+    "clean": "rimraf dist",
+    "clean:temp-src": "rimraf temp-src",
+    "copy:shared-source": "cpy ../../shared/single-core/single-core.ts ./temp-src/ --rename=jest-single.ts",
+    "compile": "tsc -p tsconfig.build.json",
+    "build": "run-s clean copy:shared-source compile clean:temp-src",
+    "test": "echo \n*** Run tests from the root folder\n"
+  },
+  "peerDependencies": {
+    "jest": "< 28.x"
+  },
+  "devDependencies": {
+    "@types/jest": "26.0.24",
+    "cpy-cli": "^3.1.1",
+    "jest": "27.0.6",
+    "microbundle": "^0.13.3",
+    "ts-jest": "27.0.4"
+  }
+}
