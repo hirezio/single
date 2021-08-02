@@ -123,7 +123,7 @@ CONSOLE OUTPUT:
 
 GIVEN first number is 1
 WHEN adding 2 to the first number
-THEM result should be 3
+THEN result should be 3
 ```
 
 ### ✅  It supports `async` / `await` -
