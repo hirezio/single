@@ -40,12 +40,15 @@ You should add `@hirez_io/jasmine-single` to your `types` property in your `tsco
 
 {
   ...
+"compilerOptions": {
   "types": [
-      "jasmine",
-      "@hirez_io/jasmine-single", // <-- ADD THIS
+    "jasmine",
+    "@hirez_io/jasmine-single", // 👈 ADD THIS
 
-      // ...any other types you might have...
+    // ...any other types you might have...
     ],
+    ...
+  }
   ...
 }
 ```
@@ -53,18 +56,22 @@ You should add `@hirez_io/jasmine-single` to your `types` property in your `tsco
 ⚠ **ATTENTION:** If you have `typeRoots` configured like this -
 
 ```ts
-"typeRoots": [
-  "node_modules/@types"
-],
+"compilerOptions": {
+  "typeRoots": [
+    "node_modules/@types"
+  ],
+}
 ```
 
 You should add `"node_modules"` like this -
 
 ```ts
-"typeRoots": [
-  "node_modules/@types",
-  "node_modules/@hirez_io" // <-- ADD THIS
-],
+"compilerOptions": {
+  "typeRoots": [
+    "node_modules/@types",
+    "node_modules/@hirez_io" // 👈 ADD THIS
+  ],
+}
 ```
 
 or else it won't find `@hirez_io/jasmine-single` global types.
@@ -108,17 +115,15 @@ module.exports = function(config) {
 Helps you break down tests into the natural "Arrange, Act, Assert" model via a nested "`given`, `when` and `then`" structure and by that enforces a "single-action" test.
 
 ```ts
-describe('MyComponent', () => {
-  let firstNum;
-  let actualResult;
-
+describe('addTwo', () => {
+  
   // This is where you setup your environment / inputs
   given('first number is 1', () => {
-    firstNum = 1;
+    const firstNum = 1;
 
     // This is where you call the action under test
     when('adding 2 to the first number', () => {
-      actualResult = addTwo(firstNum);
+      const actualResult = addTwo(firstNum);
 
       // This is where you check the outcome
       then('result should be 3', () => {
@@ -144,15 +149,13 @@ THEN result should be 3
 ### ✅  It supports `async` / `await` -
 
 ```ts
-describe('MyComponent', () => {
-  let firstNum;
-  let actualResult;
+describe('addTwo', () => {
 
   given('first number is 1', () => {
-    firstNum = 1;
+    const firstNum = 1;
 
     when('adding 2 to the first number', async () => {
-      actualResult = await addTwo(firstNum);
+      const actualResult = await addTwo(firstNum);
 
       then('result should be 3', () => {
         expect(actualResult).toEqual(3);

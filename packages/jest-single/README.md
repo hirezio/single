@@ -10,6 +10,15 @@ A Jest addon that helps you write 'Single-Action Tests' by breaking them into a 
 [![Code of Conduct](https://img.shields.io/badge/code%20of-conduct-ff69b4.svg?style=flat-square)](../../CODE_OF_CONDUCT.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
+<div align="center">
+  <a href="https://learn.hirez.io/?utm_source=github&utm_medium=link&utm_campaign=jest-single">
+    <img src="../../for-readme/test-angular.jpg"
+      alt="TestAngular.com - Free Angular Testing Workshop - The Roadmap to Angular Testing Mastery"
+      width="600"
+    />
+  </a>
+</div>
+
 ## Installation
 
 ```
@@ -45,19 +54,22 @@ For example:
 
 ## Using TypeScript?
 
-You should add `@hirez_io/jest-single` to your `types` property in your `tsconfig.json` (or `tsconfig.spec.json`) like this:
+You should add `@hirez_io/jest-single` to your `types` property under `compilerOptions` in your `tsconfig.json` (or `tsconfig.spec.json`) like this:
 
 ```js
 // tsconfig.json or tsconfig.spec.json
 
 {
   ...
-  "types": [
+  "compilerOptions": {
+    "types": [
       "jest",
       "@hirez_io/jest-single", // 👈 ADD THIS
 
       // ...any other types you might have...
     ],
+    ...
+  }
   ...
 }
 ```
@@ -65,18 +77,22 @@ You should add `@hirez_io/jest-single` to your `types` property in your `tsconfi
 ⚠ **ATTENTION:** If you have `typeRoots` configured like this -
 
 ```ts
-"typeRoots": [
-  "node_modules/@types"
-],
+"compilerOptions": {
+  "typeRoots": [
+    "node_modules/@types"
+  ],
+}
 ```
 
 You should add `"node_modules"` like this -
 
 ```ts
-"typeRoots": [
-  "node_modules/@types",
-  "node_modules/@hirez_io" // <-- ADD THIS
-],
+"compilerOptions": {
+  "typeRoots": [
+    "node_modules/@types",
+    "node_modules/@hirez_io" // 👈 ADD THIS
+  ],
+}
 ```
 
 or else it won't find `@hirez_io/jest-single` global types.
@@ -93,17 +109,15 @@ or else it won't find `@hirez_io/jest-single` global types.
 Helps you break down tests into the natural "Arrange, Act, Assert" model via a nested "`given`, `when` and `then`" structure and by that enforces a "single-action" test.
 
 ```ts
-describe('MyComponent', () => {
-  let firstNum;
-  let actualResult;
-
+describe('addTwo', () => {
+  
   // This is where you setup your environment / inputs
   given('first number is 1', () => {
-    firstNum = 1;
+    const firstNum = 1;
 
     // This is where you call the action under test
     when('adding 2 to the first number', () => {
-      actualResult = addTwo(firstNum);
+      const actualResult = addTwo(firstNum);
 
       // This is where you check the outcome
       then('result should be 3', () => {
@@ -129,15 +143,13 @@ THEN result should be 3
 ### ✅  It supports `async` / `await` -
 
 ```ts
-describe('MyComponent', () => {
-  let firstNum;
-  let actualResult;
+describe('addTwo', () => {
 
   given('first number is 1', () => {
-    firstNum = 1;
+    const firstNum = 1;
 
     when('adding 2 to the first number', async () => {
-      actualResult = await addTwo(firstNum);
+      const actualResult = await addTwo(firstNum);
 
       then('result should be 3', () => {
         expect(actualResult).toEqual(3);
@@ -159,7 +171,6 @@ It's kinda funky to start describing the input and the action as well.
 Moving the description closer to the actual parts helps you better understand the meaning, plus helps you spot mismatches in the descriptions sooner.
 
 
-
 ## Contributing
 
 Want to contribute? Yayy! 🎉
@@ -175,14 +186,3 @@ Be kind to each other and please read our [code of conduct](../../CODE_OF_CONDUC
 ## License
 
 MIT
-
-## Want to learn more?
-
-<div align="center">
-  <a href="https://learn.hirez.io/?utm_source=github&utm_medium=link&utm_campaign=jest-single">
-    <img src="../../for-readme/test-angular.jpg"
-      alt="TestAngular.com - Free Angular Testing Workshop - The Roadmap to Angular Testing Mastery"
-      width="600"
-    />
-  </a>
-</div>
