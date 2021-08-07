@@ -19,6 +19,46 @@ A jasmine addon that helps you write 'Single-Action Tests' by breaking them into
   </a>
 </div>
 
+<br/>
+
+# Table of Contents
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+  - [Installation](#installation)
+  
+  - [Using TypeScript?](#using-typescript)
+
+  - [Using karma?](#using-karma)
+
+  - [What are "single-action" tests?](#what-are-single-action-tests)
+
+  - [Why writing single-action tests is good?](#why-writing-single-action-tests-is-good)
+
+  - [How to write single-action tests?](#how-to-write-single-action-tests)
+
+  - [What's wrong with using `it()` for single-action tests?](#whats-wrong-with-using-it-for-single-action-tests)
+  
+  - [Usage](#usage)
+
+    - [▶ The basic testing structure](#%E2%96%B6-the-basic-testing-structure)
+
+    - [▶ Meaningful error messages](#%E2%96%B6-meaningful-error-messages)
+  
+    - [▶ `async` / `await` support](#%E2%96%B6-async--await-support)
+
+    - [▶ `done()` function support](#%E2%96%B6-done-function-support)
+  - [Contributing](#contributing)
+  - [Code Of Conduct](#code-of-conduct)
+  - [License](#license)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+
+
+<br/>
+
 ## Installation
 
 ```
@@ -33,19 +73,24 @@ npm install -D @hirez_io/jasmine-single
 
 ### Using TypeScript?
 
-You should add `@hirez_io/jasmine-single` to your `types` property in your `tsconfig.json` (or `tsconfig.spec.json`) like this:
+<details>
+<summary>⚠ <strong>CLICK HERE TO EXPAND</strong></summary>
+
+<br/>
+
+You should add `@hirez_io/jasmine-single` to your `types` property under `compilerOptions` in your `tsconfig.json` (or `tsconfig.spec.json`) like this:
 
 ```js
 // tsconfig.json or tsconfig.spec.json
 
 {
   ...
-"compilerOptions": {
-  "types": [
-    "jasmine",
-    "@hirez_io/jasmine-single", // 👈 ADD THIS
+  "compilerOptions": {
+    "types": [
+      "jasmine",
+      "@hirez_io/jasmine-single", // 👈 ADD THIS
 
-    // ...any other types you might have...
+      // ...any other types you might have...
     ],
     ...
   }
@@ -75,10 +120,20 @@ You should add `"node_modules"` like this -
 ```
 
 or else it won't find `@hirez_io/jasmine-single` global types.
+### ⚠ **VS CODE USERS:** 
 
-⚠ **VS CODE USERS:** add the above configuration (`types` and/or `typeRoots`) to your `tsconfig.json` specifically or else it would not recognize the global types.
+Add the above configuration (`types` and/or `typeRoots`) to your `tsconfig.json` specifically or else it would not recognize the global types.
+
+</details>
+
+<br/>
 
 ### Using karma?
+
+<details>
+<summary>⚠ <strong>CLICK HERE TO EXPAND</strong></summary>
+
+<br/>
 
 `@hirez_io/jasmine-single` has a dependency on `@hirez_io/karma-jasmine-single` which is a karma plugin (inspired by [karma-jasmine-given](https://github.com/kirisu/karma-jasmine-given)) I rewrote to save you the hassle of loading the library script yourself.
 
@@ -108,11 +163,48 @@ module.exports = function(config) {
     // ...
 ```
 
-## Why choose this over plain `beforeEach` and `it()` functions?
 
-### ✅ **Allows for a much cleaner test structure:**
+</details>
 
-Helps you break down tests into the natural "Arrange, Act, Assert" model via a nested "`given`, `when` and `then`" structure and by that enforces a "single-action" test.
+<br/>
+
+
+## What are "single-action" tests?
+
+A single-action test is a test with only one action. (CAPTAIN OBVIOUS! 🦸‍♂️😅)
+
+Normally, you setup the environment, you call an action and then you check the output.
+
+#### What's an action?
+
+Well... it can be a method call, a button click or anything else our test is checking.
+
+The big idea here is that it should be only **ONE ACTION PER TEST**.
+
+<br/>
+
+## Why writing single-action tests is good?
+
+Single action tests are more "Test Effective" compared to multi-action tests.
+
+The benefits of single-action tests:
+
+✅ Your tests will **break less often** (making them more effective)
+
+✅ Whenever something breaks, you have **only one "action" code to debug**
+
+✅ They promote **better coverage** (easier to see which cases are still missing)
+
+✅ They give you **better structure** (every part of your test has a clear goal)
+
+
+<br/>
+
+## How to write single-action tests?
+
+This library follows the natural "`given`, `when` and `then`" structure (some of you know it as "Arrange, Act, Assert").
+
+This means every test has only 3 parts to it, no more.
 
 ```ts
 describe('addTwo', () => {
@@ -133,6 +225,7 @@ describe('addTwo', () => {
   });
 
 });
+
 ```
 
 It also prints a nicer test description when there's an error:
@@ -146,14 +239,229 @@ WHEN adding 2 to the first number
 THEN result should be 3
 ```
 
-### ✅  It supports `async` / `await` -
+<br/>
+
+## What's wrong with using `it()` for single-action tests?
+
+Did you know that the most common way of writing JavaScript tests dates back to 2005? 😅
+
+Jasmine, which was created in 2009 was inspired by Ruby's testing framework - RSpec which was created in 2005.
+
+
+Originally, RSpec introduced the syntax of "`describe` > `context` > `it`", where `context` was meant to be used as the "setup" part of the test.
+
+Unfortunately, the `context` wasn't ported to Jasmine so we got used to writing our tests in the "`describe` > `it`" structure... which is more limited.
+
+<br/>
+
+_Here are a couple of limitations with the common `it()` structure:_
+
+### ❌ 1. It promotes partial or awkward descriptions of tests
+
+The word "it" kinda forces you to begin the description with "should" which leads to focusing specifically on just the "outcome" part of the test (the `then`).
+
+But if you want to add more context (like what should be the input that causes that outcome) things start to get messy.
+
+Because there isn't a clear convention, people tend to invent their own on the fly which creates inconsistency.
+
+
+**Example:**
+```ts
+it('should do X only when environment is Y and also called by Z But only if...you get the point', ()=> ...)
+```
+
+<br/>
+
+### ❌ 2. Nothing prevents you from writing multi-action tests
+
+ This mixes up testing structures and making them harder to understand
+
+**Example:**
+```ts
+it('should do transform products', ()=> {
+
+  // SETUP
+  const fakeProducts = [...];
+
+  // ACTION
+  const result = classUnderTest.transformProducts(fakeProducts);
+
+  // OUTCOME
+  const transformedProducts = [...];
+  expect(result).toEqual(transformedProducts);
+
+  // ACTION
+  const result2 = classUnderTest.transformProducts();
+
+  // OUTCOME
+  expect(result2).toEqual( [] );
+
+
+  // this 👆 is a multi-action test.
+
+})
+```
+<br/>
+
+### ❌ 3. Detailed descriptions can get out of date more easily
+
+The farther the description is from the actual implementation the less likely you'll remember to update it when the test code changes
+
+**Example:**
+```ts
+test('GIVEN valid products and metadata returned successfully WHEN destroying the products THEN they should get decorated', ()=> {
+
+  const fakeProducts = [...];
+  const fakeMetadata = [...];
+  mySpy.getMetadata.and.returnValue(fakeMetadata);
+
+  const result = classUnderTest.transformProducts(fakeProducts);
+
+  const decoratedProducts = [...];
+  expect(result).toEqual(decoratedProducts);
+
+})
+```
+<br/>
+
+#### Did you spot the typo? 👆😅
+
+
+(it should be _"transforming"_ instead of _"destroying"_)
+
+<br/>
+
+Compare that to - 
+
+```ts
+
+  given('valid products and metadata returned successfully', () => {
+    const fakeProducts = [...];
+    const fakeMetadata = [...];
+    mySpy.getMetadata.and.returnValue(fakeMetadata);
+    
+    //        👇 --> easier to spot as it's closer to the implementation
+    when('destroying the products', () => { 
+      const result = classUnderTest.transformProducts(fakeProducts);
+
+      then('they should get decorated', () => {
+        const decoratedProducts = [...];
+        expect(result).toEqual(decoratedProducts);
+      });
+    });
+  });
+
+
+```
+
+<br/>
+
+
+
+## Usage
+
+### ▶ The basic testing structure
+
+The basic structure is a nesting of these 3 functions: 
+
+```ts
+given(description, () => {
+  when(description, () => {
+    then(description, () => {
+ 
+    })
+  })
+})
+  
+    
+```
+
+**EXAMPLE:**
+```ts
+describe('addTwo', () => {
+  
+  // This is where you setup your environment / inputs
+  given('first number is 1', () => {
+    const firstNum = 1;
+
+    // This is where you call the action under test
+    when('adding 2 to the first number', () => {
+      const actualResult = addTwo(firstNum);
+
+      // This is where you check the outcome
+      then('result should be 3', () => {
+        expect(actualResult).toEqual(3);
+      });
+    });
+  });
+
+});
+
+```
+
+Under the hood it creates a regular `it()` test with a combination of all the descriptions:
+
+```
+CONSOLE OUTPUT:
+~~~~~~~~~~~~~~
+
+GIVEN first number is 1
+WHEN adding 2 to the first number
+THEN result should be 3
+```
+
+<br/>
+
+### ▶ Meaningful error messages
+
+This library will throw an error if you deviate from the `given > when > then` structure.
+
+So you won't be tempted to accidentally turn your single-action test into a multi-action one.
+
+```ts
+describe('addTwo', () => {
+  
+    // 👉 ATTENTION: You cannot start with a "when()" or a "then()"
+    //                the test MUST start with a "given()"
+
+
+  given('first number is 1', () => {
+    const firstNum = 1;
+
+    // 👉 ATTENTION: You cannot add here a "then()" function directly 
+    //                or another "given()" function
+
+    when('adding 2 to the first number', () => {
+      const actualResult = addTwo(firstNum);
+
+      // 👉 ATTENTION: You cannot add here a "given()" function
+      //                or another "when()" function
+
+      then('result should be 3', () => {
+        expect(actualResult).toEqual(3);
+
+
+        // 👉 ATTENTION: You cannot add here a "given()" function
+        //                or a "when()" function or another "then()"
+      });
+    });
+  });
+
+});
+
+```
+
+
+### ▶ `async` / `await` support
+
+**Example:**
 
 ```ts
 describe('addTwo', () => {
 
   given('first number is 1', () => {
     const firstNum = 1;
-
+    //                                    👇
     when('adding 2 to the first number', async () => {
       const actualResult = await addTwo(firstNum);
 
@@ -168,14 +476,37 @@ describe('addTwo', () => {
 
 ```
 
-### ✅ **Promotes better test descriptions:**
+### ▶ `done()` function support
 
-The message inside `it("should do something", ...)` focuses specifically on the "outcome" of the test (`then`).
+The `given` function supports the (old) async callback way of using a `done()` function to signal when the test is completed.
 
-It's kinda funky to start describing the input and the action as well.
+```ts
+describe('addTwo', () => {
+  //                           👇
+  given('first number is 1', (done) => {
+    const firstNum = 1;
 
-Moving the description closer to the actual parts helps you better understand the meaning, plus helps you spot mismatches in the descriptions sooner.
+    when('adding 2 to the first number', () => {
+      const actualResult = addTwo(firstNum, function callback() {
 
+      then('result should be 3', () => {
+          expect(actualResult).toEqual(3);
+          done();
+        });
+
+      });
+    });
+
+  });
+
+});
+
+
+```
+
+ℹ It also supports `done(error)` or `done.fail(error)` for throwing async errors.
+
+<br/>
 
 ## Contributing
 
@@ -185,9 +516,13 @@ Please read and follow our [Contributing Guidelines](../../CONTRIBUTING.md) to l
 
 Thanks 🙏
 
+<br/>
+
 ## Code Of Conduct
 
 Be kind to each other and please read our [code of conduct](../../CODE_OF_CONDUCT.md).
+
+<br/>
 
 ## License
 

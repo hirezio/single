@@ -36,7 +36,7 @@ declare global {
 }
 
 export interface TestFunction{
-  (description: string, callback: (...args:any[])=>any): void
+  (description: string, callback: TestCallback): void
 }
 
 export interface GivenFunction extends TestFunction {
@@ -44,16 +44,27 @@ export interface GivenFunction extends TestFunction {
   skip: TestFunction;
 }
 
+export interface DoneFn {
+  (...args: Error[]): void;
+  fail: (...args: Error[]) => void;
+}
+
+export interface TestCallback {
+  (done: DoneFn, ...args:any[]): any;
+}
+
 const root = (1, eval)('this');
 
 let currentRunningFunction: 'given' | 'when' | 'then' | undefined;
 let numberOfWhens: number;
 let numberOfThens: number;
+let doneFunctionIsSet: boolean = false;
 
 beforeEach(function () {
   currentRunningFunction = undefined;
   numberOfWhens = 0;
   numberOfThens = 0;
+  doneFunctionIsSet = false;
 });
 
 root.given = function given(description: string, callback: (...args:any[])=>any) {
@@ -103,7 +114,7 @@ function getGivenCallbackWrapper(callback: (...args:any[])=>any) {
 
     currentRunningFunction = 'given';
     
-    await callback();
+    await promisify(callback);
 
   }
 }
@@ -143,7 +154,7 @@ root.then = function then(description: string, callback: (...args:any[])=>any) {
     throw new Error(getOnlyOneError('then'));
   }
   
-  if (currentRunningFunction !== 'when') {
+  if (!doneFunctionIsSet && currentRunningFunction !== 'when') {
     throw new Error(getMustBeAChildError('then'));
   }
 
@@ -159,3 +170,28 @@ root.then = function then(description: string, callback: (...args:any[])=>any) {
     currentRunningFunction = oldContext;
   }
 };
+
+async function promisify(fn: TestCallback): Promise<TestCallback> {
+  if (doesFunctionHaveParams(fn)) {
+    doneFunctionIsSet = true;
+    return new Promise((resolve, reject) => {
+      function next(err: Error) {
+        if (err) {
+          reject(err);
+          return;
+        }
+        resolve(undefined as any);
+      }
+      next.fail = function nextFail(err: Error) {
+        reject(err);
+      };
+
+      fn.call(this, next);
+    });
+  }
+  return await (fn as () => any).call(this);
+}
+
+function doesFunctionHaveParams(fn: (...args: any[]) => any) {
+  return fn.length > 0;
+}

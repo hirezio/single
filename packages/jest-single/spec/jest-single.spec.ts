@@ -107,6 +107,65 @@ describe('Jest Single', () => {
   });
 
   describe('Async tests', () => {
+
+    given('a "done" function gets passed', (done) => {
+      const fakeNumber = 1;
+
+      when('adding 2 asynchronously', () => {
+        const actualResult = addTwo(fakeNumber);
+
+        setTimeout(() => {
+          then('result should be 3', () => {
+            expect(actualResult).toBe(3);
+            done();
+          });  
+        }, 0);
+        
+      });
+    });
+
+    it('should handle errors passed to "done"', async () => {
+      let actualPromiseFromGiven: Promise<any> | undefined = undefined;
+      jest.spyOn(root, 'it').mockImplementation((desc: any, fn: any) => {
+        actualPromiseFromGiven = fn();
+      });
+
+      given('given', (done) => {
+        when('when', () => {
+          then('then', () => {
+            done(new Error('FAKE ERROR'));
+          });
+        });
+      });
+      try {
+        await actualPromiseFromGiven;
+        
+      } catch (error) {
+        expect(error.message).toEqual('FAKE ERROR');
+      }
+    });
+
+    it('should handle errors passed to "done.fail()"', async () => {
+      let actualPromiseFromGiven: Promise<any> | undefined = undefined;
+      jest.spyOn(root, 'it').mockImplementation((desc: any, fn: any) => {
+        actualPromiseFromGiven = fn();
+      });
+
+      given('given', (done) => {
+          when('when', () => {
+            then('then', () => {
+              done.fail(new Error('FAKE ERROR'));
+            });
+          });
+      });
+      try {
+        await actualPromiseFromGiven;
+        
+      } catch (error) {
+        expect(error.message).toEqual('FAKE ERROR');
+      }
+    });
+
     given('input is set to 1', () => {
       const fakeNumber = 1;
 
