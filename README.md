@@ -1,7 +1,7 @@
 # (jasmine | jest)-single Monorepo
 
  <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-green.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 ## Packages
@@ -48,7 +48,8 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- markdownlint-disable -->
 <table>
   <tr>
-    <td align="center"><a href="https://www.hirez.io/become-a-testing-master?utm_medium=Open_Source&utm_source=Github&utm_campaign=Lead_Generation&utm_content=single--all-contributors-profile-link"><img src="https://avatars1.githubusercontent.com/u/1430726?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Shai Reznik</b></sub></a><br /><a href="https://github.com/hirezio/single/commits?author=shairez" title="Code">💻</a> <a href="https://github.com/hirezio/single/commits?author=shairez" title="Documentation">📖</a> <a href="#ideas-shairez" title="Ideas, Planning, & Feedback">🤔</a> <a href="#infra-shairez" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="#maintenance-shairez" title="Maintenance">🚧</a> <a href="#mentoring-shairez" title="Mentoring">🧑‍🏫</a> <a href="https://github.com/hirezio/single/pulls?q=is%3Apr+reviewed-by%3Ashairez" title="Reviewed Pull Requests">👀</a> <a href="https://github.com/hirezio/single/commits?author=shairez" title="Tests">⚠️</a></td>
+    <td align="center"><a href="https://www.hirez.io/become-a-testing-master?utm_medium=Open_Source&utm_source=Github&utm_campaign=Lead_Generation&utm_content=jest-single--all-contributors-profile-link"><img src="https://avatars1.githubusercontent.com/u/1430726?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Shai Reznik</b></sub></a><br /><a href="https://github.com/hirezio/single/commits?author=shairez" title="Code">💻</a> <a href="https://github.com/hirezio/single/commits?author=shairez" title="Documentation">📖</a> <a href="#ideas-shairez" title="Ideas, Planning, & Feedback">🤔</a> <a href="#infra-shairez" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="#maintenance-shairez" title="Maintenance">🚧</a> <a href="#mentoring-shairez" title="Mentoring">🧑‍🏫</a> <a href="https://github.com/hirezio/single/pulls?q=is%3Apr+reviewed-by%3Ashairez" title="Reviewed Pull Requests">👀</a> <a href="https://github.com/hirezio/single/commits?author=shairez" title="Tests">⚠️</a></td>
+    <td align="center"><a href="https://www.webtrix.be"><img src="https://avatars.githubusercontent.com/u/4103756?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Maarten Tibau</b></sub></a><br /><a href="https://github.com/hirezio/single/commits?author=maartentibau" title="Documentation">📖</a> <a href="#infra-maartentibau" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
   </tr>
 </table>
 
