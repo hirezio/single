@@ -280,7 +280,7 @@ it('should do X only when environment is Y and also called by Z But only if...yo
 
 **Example:**
 ```ts
-it('should do transform products', ()=> {
+it('should transform the products', ()=> {
 
   // SETUP
   const fakeProducts = [...];
