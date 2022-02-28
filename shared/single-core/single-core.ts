@@ -67,12 +67,12 @@ beforeEach(function () {
   doneFunctionIsSet = false;
 });
 
-root.given = function given(description: string, callback: (...args:any[])=>any) {
+root.given = function given(givenDescription: string, callback: (...args:any[])=>any) {
   if (currentRunningFunction !== undefined) {
     throw new Error(getOnlyOneError('given'));
   }
   
-  const fullDescription = getFullDescription(description, callback);
+  const fullDescription = getFullDescription(givenDescription, callback);
   it(fullDescription, getGivenCallbackWrapper(callback));
 };
 
@@ -138,10 +138,17 @@ root.when = function when(description: string, callback: (...args:any[])=>any) {
   currentRunningFunction = 'when';
 
   const potentialPromise = callback();
-  if (potentialPromise && typeof potentialPromise.then === 'function') {
-    potentialPromise.then(() => {
-      currentRunningFunction = oldContext;
-    });
+  if (potentialPromise) {
+    const then = potentialPromise.then;
+    /* istanbul ignore else */
+    if (typeof then === 'function') {
+      then.call(potentialPromise, () => {
+        currentRunningFunction = oldContext;
+      });
+    } else {
+      /* istanbul ignore next */
+      currentRunningFunction = oldContext;  
+    }
   } else {
     currentRunningFunction = oldContext;
   }
@@ -162,10 +169,17 @@ root.then = function then(description: string, callback: (...args:any[])=>any) {
   currentRunningFunction = 'then';
   
   const potentialPromise = callback();
-  if (potentialPromise && typeof potentialPromise.then === 'function') {
-    potentialPromise.then(() => {
-      currentRunningFunction = oldContext;
-    });
+  if (potentialPromise) {
+    const then = potentialPromise.then;
+    /* istanbul ignore else */
+    if (typeof then === 'function') {
+      then.call(potentialPromise, () => {
+        currentRunningFunction = oldContext;
+      });
+    } else {
+      /* istanbul ignore next */
+      currentRunningFunction = oldContext;  
+    }
   } else {
     currentRunningFunction = oldContext;
   }
