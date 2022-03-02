@@ -85,7 +85,7 @@ describe('Jest Single', () => {
       given('root given', () => {
         try {
           fgiven('another given', () => {});
-        } catch (error) {
+        } catch (error: any) {
           expect(error.message).toEqual(getOnlyOneError('given'));
         }
       });
@@ -140,7 +140,7 @@ describe('Jest Single', () => {
       try {
         await actualPromiseFromGiven;
         
-      } catch (error) {
+      } catch (error: any) {
         expect(error.message).toEqual('FAKE ERROR');
       }
     });
@@ -161,7 +161,7 @@ describe('Jest Single', () => {
       try {
         await actualPromiseFromGiven;
         
-      } catch (error) {
+      } catch (error: any) {
         expect(error.message).toEqual('FAKE ERROR');
       }
     });
@@ -202,7 +202,7 @@ describe('Jest Single', () => {
       given('root given', () => {
         try {
           given('another given', () => {});
-        } catch (error) {
+        } catch (error: any) {
           expect(error.message).toEqual(getOnlyOneError('given'));
         }
       });
@@ -215,7 +215,7 @@ describe('Jest Single', () => {
         when('fake when', () => {
           try {
             given('another given', () => {});
-          } catch (error) {
+          } catch (error: any) {
             expect(error.message).toEqual(getOnlyOneError('given'));
           }
         });
@@ -230,7 +230,7 @@ describe('Jest Single', () => {
           then('fake then', () => {
             try {
               given('another given', () => {});
-            } catch (error) {
+            } catch (error: any) {
               expect(error.message).toEqual(getOnlyOneError('given'));
             }
           });
@@ -242,7 +242,7 @@ describe('Jest Single', () => {
       try {
         when('fake when', () => {});
         fail('The function "when" should have thrown an error');
-      } catch (error) {
+      } catch (error: any) {
         expect(error.message).toEqual(getMustBeAChildError('when'));
       }
     });
@@ -251,7 +251,7 @@ describe('Jest Single', () => {
       try {
         then('fake then', () => {});
         fail('The function "then" should have thrown an error');
-      } catch (error) {
+      } catch (error: any) {
         expect(error.message).toEqual(getMustBeAChildError('then'));
       }
     });
@@ -261,7 +261,7 @@ describe('Jest Single', () => {
         try {
           then('fake then', () => {});
           fail('The function "then" should have thrown an error');
-        } catch (error) {
+        } catch (error: any) {
           expect(error.message).toEqual(getMustBeAChildError('then'));
         }
       });
@@ -274,7 +274,7 @@ describe('Jest Single', () => {
           when('first when', () => {});
           when('second when', () => {});
           fail('The second "when" function should have thrown an error');
-        } catch (error) {
+        } catch (error: any) {
           expect(error.message).toEqual(getOnlyOneError('when'));
         }
       });
@@ -288,7 +288,7 @@ describe('Jest Single', () => {
             then('first then', () => {});
             then('second then', () => {});
             fail('The second "then" function should have thrown an error');
-          } catch (error) {
+          } catch (error: any) {
             expect(error.message).toEqual(getOnlyOneError('then'));
           }
         });

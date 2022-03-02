@@ -85,7 +85,7 @@ describe('Jasmine Single', () => {
       given('root given', () => {
         try {
           fgiven('another given', () => {});
-        } catch (error) {
+        } catch (error: any) {
           expect(error.message).toEqual(getOnlyOneError('given'));
         }
       });
@@ -140,7 +140,7 @@ describe('Jasmine Single', () => {
       try {
         await actualPromiseFromGiven;
         
-      } catch (error) {
+      } catch (error: any) {
         expect(error.message).toEqual('FAKE ERROR');
       }
     });
@@ -161,7 +161,7 @@ describe('Jasmine Single', () => {
       try {
         await actualPromiseFromGiven;
         
-      } catch (error) {
+      } catch (error: any) {
         expect(error.message).toEqual('FAKE ERROR');
       }
     });
@@ -201,7 +201,7 @@ describe('Jasmine Single', () => {
       given('root given', () => {
         try {
           given('another given', () => {});
-        } catch (error) {
+        } catch (error: any) {
           expect(error.message).toEqual(getOnlyOneError('given'));
         }
       });
@@ -214,7 +214,7 @@ describe('Jasmine Single', () => {
         when('fake when', () => {
           try {
             given('another given', () => {});
-          } catch (error) {
+          } catch (error: any) {
             expect(error.message).toEqual(getOnlyOneError('given'));
           }
         });
@@ -229,7 +229,7 @@ describe('Jasmine Single', () => {
           then('fake then', () => {
             try {
               given('another given', () => {});
-            } catch (error) {
+            } catch (error: any) {
               expect(error.message).toEqual(getOnlyOneError('given'));
             }
           });
@@ -241,7 +241,7 @@ describe('Jasmine Single', () => {
       try {
         when('fake when', () => {});
         fail('The function "when" should have thrown an error');
-      } catch (error) {
+      } catch (error: any) {
         expect(error.message).toEqual(getMustBeAChildError('when'));
       }
     });
@@ -250,7 +250,7 @@ describe('Jasmine Single', () => {
       try {
         then('fake then', () => {});
         fail('The function "then" should have thrown an error');
-      } catch (error) {
+      } catch (error: any) {
         expect(error.message).toEqual(getMustBeAChildError('then'));
       }
     });
@@ -260,7 +260,7 @@ describe('Jasmine Single', () => {
         try {
           then('fake then', () => {});
           fail('The function "then" should have thrown an error');
-        } catch (error) {
+        } catch (error: any) {
           expect(error.message).toEqual(getMustBeAChildError('then'));
         }
       });
@@ -273,7 +273,7 @@ describe('Jasmine Single', () => {
           when('first when', () => {});
           when('second when', () => {});
           fail('The second "when" function should have thrown an error');
-        } catch (error) {
+        } catch (error: any) {
           expect(error.message).toEqual(getOnlyOneError('when'));
         }
       });
@@ -287,7 +287,7 @@ describe('Jasmine Single', () => {
             then('first then', () => {});
             then('second then', () => {});
             fail('The second "then" function should have thrown an error');
-          } catch (error) {
+          } catch (error: any) {
             expect(error.message).toEqual(getOnlyOneError('then'));
           }
         });
