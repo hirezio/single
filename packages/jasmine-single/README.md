@@ -410,7 +410,7 @@ given(description, () => {
 
 ```
 
-**EXAMPLE:**
+**Example:**
 ```ts
 describe('addTwo', () => {
 
