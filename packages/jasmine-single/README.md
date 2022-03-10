@@ -21,6 +21,11 @@ A jasmine addon that helps you write 'Single-Action Tests' by breaking them into
   </a>
 </div>
 
+<style>
+  summary { user-select: none; }
+  summary:hover { cursor: pointer; }
+</style>
+
 <br/>
 
 # Table of Contents
@@ -29,8 +34,10 @@ A jasmine addon that helps you write 'Single-Action Tests' by breaking them into
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
   - [Installation](#installation)
-  
+
   - [Using TypeScript?](#using-typescript)
+
+  - [Configuring Nx](#configuring-nx)
 
   - [Using karma?](#using-karma)
 
@@ -41,13 +48,13 @@ A jasmine addon that helps you write 'Single-Action Tests' by breaking them into
   - [How to write single-action tests?](#how-to-write-single-action-tests)
 
   - [What's wrong with using `it()` for single-action tests?](#whats-wrong-with-using-it-for-single-action-tests)
-  
+
   - [Usage](#usage)
 
     - [▶ The basic testing structure](#%E2%96%B6-the-basic-testing-structure)
 
     - [▶ Meaningful error messages](#%E2%96%B6-meaningful-error-messages)
-  
+
     - [▶ `async` / `await` support](#%E2%96%B6-async--await-support)
 
     - [▶ `done()` function support](#%E2%96%B6-done-function-support)
@@ -73,14 +80,16 @@ or
 npm install -D @hirez_io/jasmine-single
 ```
 
-### Using TypeScript?
+## Using TypeScript?
 
 <details>
 <summary>⚠ <strong>CLICK HERE TO EXPAND</strong></summary>
 
 <br/>
 
-You should add `@hirez_io/jasmine-single` to your `types` property under `compilerOptions` in your `tsconfig.json` (or `tsconfig.spec.json`) like this:
+In order to find the `@hirez_io/jest-single` global types:
+
+Add `@hirez_io/jasmine-single` to the `types` property under `compilerOptions` in your `tsconfig.json` (or `tsconfig.spec.json`) like this:
 
 ```js
 // tsconfig.json or tsconfig.spec.json
@@ -100,7 +109,7 @@ You should add `@hirez_io/jasmine-single` to your `types` property under `compil
 }
 ```
 
-⚠ **ATTENTION:** If you have `typeRoots` configured like this -
+⚠ **ATTENTION:** If you have `typeRoots` configured like this:
 
 ```ts
 "compilerOptions": {
@@ -110,7 +119,7 @@ You should add `@hirez_io/jasmine-single` to your `types` property under `compil
 }
 ```
 
-You should add `"node_modules"` like this -
+You should add `"node_modules"` like this:
 
 ```ts
 "compilerOptions": {
@@ -122,15 +131,39 @@ You should add `"node_modules"` like this -
 ```
 
 or else it won't find `@hirez_io/jasmine-single` global types.
-### ⚠ **VS CODE USERS:** 
+### ⚠ **VS CODE USERS:**
 
-Add the above configuration (`types` and/or `typeRoots`) to your `tsconfig.json` specifically or else it would not recognize the global types.
+Adding the above configuration (`types` and/or `typeRoots`) to your `tsconfig.json` (or `tsconfig.spec.json`) is necessary when using VS Code, otherwise the IDE will not recognize the global types.
 
 </details>
 
 <br/>
 
-### Using karma?
+## Configuring Nx
+
+<details>
+<summary>⚠ <strong>CLICK HERE TO EXPAND</strong></summary>
+
+<br/>
+
+When configuring `@hirez_io/jasmine-single` for Nx follow the TypeScript setup provided, and when setting the `types` property under `compileOptions` in `tsconfig.spec.json` apply the same updates to `tsconfig.editor.json` if it exists:
+
+```js
+// For tsconfig.spec.json AND tsconfig.editor.json:
+{
+  "compilerOptions": {
+    "types": [
+      "jest",
+      "@hirez_io/jest-single", // 👈 ADD THIS
+    ],
+  }
+}
+```
+</details>
+
+<br/>
+
+## Using karma?
 
 <details>
 <summary>⚠ <strong>CLICK HERE TO EXPAND</strong></summary>
@@ -191,13 +224,13 @@ Single action tests are more "Test Effective" compared to multi-action tests.
 
 The benefits of single-action tests:
 
-✅ Your tests will **break less often** (making them more effective)
+✅ &nbsp; Your tests will **break less often** (making them more effective)
 
-✅ Whenever something breaks, you have **only one "action" code to debug**
+✅ &nbsp; Whenever something breaks, you have **only one "action" code to debug**
 
-✅ They promote **better coverage** (easier to see which cases are still missing)
+✅ &nbsp; They promote **better coverage** (easier to see which cases are still missing)
 
-✅ They give you **better structure** (every part of your test has a clear goal)
+✅ &nbsp; They give you **better structure** (every part of your test has a clear goal)
 
 
 <br/>
@@ -210,7 +243,7 @@ This means every test has only 3 parts to it, no more.
 
 ```ts
 describe('addTwo', () => {
-  
+
   // This is where you setup your environment / inputs
   given('first number is 1', () => {
     const firstNum = 1;
@@ -258,7 +291,7 @@ Unfortunately, the `context` wasn't ported to Jasmine so we got used to writing 
 
 _Here are a couple of limitations with the common `it()` structure:_
 
-### ❌ 1. It promotes partial or awkward descriptions of tests
+### ❌&nbsp; 1. It promotes partial or awkward descriptions of tests
 
 The word "it" kinda forces you to begin the description with "should" which leads to focusing specifically on just the "outcome" part of the test (the `then`).
 
@@ -274,7 +307,7 @@ it('should do X only when environment is Y and also called by Z But only if...yo
 
 <br/>
 
-### ❌ 2. Nothing prevents you from writing multi-action tests
+### ❌&nbsp; 2. Nothing prevents you from writing multi-action tests
 
  This mixes up testing structures and making them harder to understand
 
@@ -305,7 +338,7 @@ it('should transform the products', ()=> {
 ```
 <br/>
 
-### ❌ 3. Detailed descriptions can get out of date more easily
+### ❌&nbsp; 3. Detailed descriptions can get out of date more easily
 
 The farther the description is from the actual implementation the less likely you'll remember to update it when the test code changes
 
@@ -333,7 +366,7 @@ test('GIVEN valid products and metadata returned successfully WHEN destroying th
 
 <br/>
 
-Compare that to - 
+Compare that to:
 
 ```ts
 
@@ -341,9 +374,9 @@ Compare that to -
     const fakeProducts = [...];
     const fakeMetadata = [...];
     mySpy.getMetadata.and.returnValue(fakeMetadata);
-    
+
     //        👇 --> easier to spot as it's closer to the implementation
-    when('destroying the products', () => { 
+    when('destroying the products', () => {
       const result = classUnderTest.transformProducts(fakeProducts);
 
       then('they should get decorated', () => {
@@ -364,24 +397,24 @@ Compare that to -
 
 ### ▶ The basic testing structure
 
-The basic structure is a nesting of these 3 functions: 
+The basic structure is a nesting of these 3 functions:
 
 ```ts
 given(description, () => {
   when(description, () => {
     then(description, () => {
- 
+
     })
   })
 })
-  
-    
+
+
 ```
 
 **EXAMPLE:**
 ```ts
 describe('addTwo', () => {
-  
+
   // This is where you setup your environment / inputs
   given('first number is 1', () => {
     const firstNum = 1;
@@ -422,7 +455,7 @@ So you won't be tempted to accidentally turn your single-action test into a mult
 
 ```ts
 describe('addTwo', () => {
-  
+
     // 👉 ATTENTION: You cannot start with a "when()" or a "then()"
     //                the test MUST start with a "given()"
 
@@ -430,7 +463,7 @@ describe('addTwo', () => {
   given('first number is 1', () => {
     const firstNum = 1;
 
-    // 👉 ATTENTION: You cannot add here a "then()" function directly 
+    // 👉 ATTENTION: You cannot add here a "then()" function directly
     //                or another "given()" function
 
     when('adding 2 to the first number', () => {
