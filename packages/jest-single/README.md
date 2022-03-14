@@ -13,7 +13,7 @@ A Jest addon that helps you write 'Single-Action Tests' by breaking them into a 
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 <div align="center">
-  <a href="https://learn.hirez.io/?utm_source=github&utm_medium=link&utm_campaign=jest-single">
+  <a href="https://hirez.io?utm_medium=Open_Source&utm_source=Github&utm_campaign=Lead_Generation&utm_content=jest_single_readme_banner">
     <img src="../../for-readme/test-angular.jpg"
       alt="TestAngular.com - Free Angular Testing Workshop - The Roadmap to Angular Testing Mastery"
       width="600"
