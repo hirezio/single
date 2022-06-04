@@ -91,6 +91,22 @@ describe('Jest Single', () => {
       });
     });
 
+    it('should combine all 3 descriptions for fgiven as well', () => {
+      const itSpy = jest.spyOn(root, 'fit').mockImplementation();
+      fgiven('fake given description', () => {
+        when(`fake when description`, () => {
+          then('fake then description', () => {});
+        });
+      });
+      const expectedFullDescription = `
+    GIVEN fake given description
+    WHEN  fake when description
+    THEN  fake then description`;
+
+      const actualDescription = itSpy.mock.calls[0][0];
+      expect(actualDescription).toEqual(expectedFullDescription);
+    });
+
     it('should be able to exclude a given using "xgiven"', () => {
       const xitSpy = jest.spyOn(root, 'xit').mockImplementation();
       xgiven('FAKE DESCRIPTION', function () {});

@@ -91,6 +91,25 @@ describe('Jasmine Single', () => {
       });
     });
 
+    it('should combine all 3 descriptions for fgiven as well', () => {
+    
+      const itSpy = spyOn(root, 'fit');  
+      
+      fgiven('fake given description', () => {
+        when(`fake when description`, () => {
+          then('fake then description', () => {});
+        });
+      });
+      const expectedFullDescription = `
+    GIVEN fake given description
+    WHEN  fake when description
+    THEN  fake then description`;
+
+      const actualDescription = itSpy.calls.first().args[0];
+      expect(actualDescription).toEqual(expectedFullDescription);
+    });
+
+
     it('should be able to exclude a given using "xgiven"', () => {
       const xitSpy = spyOn(root, 'xit');
       xgiven('FAKE DESCRIPTION', function () {});

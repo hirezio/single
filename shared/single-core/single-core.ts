@@ -76,6 +76,14 @@ root.given = function given(givenDescription: string, callback: (...args:any[])=
   it(fullDescription, getGivenCallbackWrapper(callback));
 };
 
+root.given.only = root.fgiven = function given(givenDescription: string, callback: (...args:any[])=>any) {
+  if (currentRunningFunction !== undefined) {
+    throw new Error(getOnlyOneError('given'));
+  }
+  const fullDescription = getFullDescription(givenDescription, callback);
+  fit(fullDescription, getGivenCallbackWrapper(callback));
+};
+
 function getFullDescription(givenDescription: string, callback: (...args:any[])=>any): string{
   const functionContent = callback.toString();
   const regex = /when\(["'`](.*?)["'`],.*then\(["'`](.*?)["'`],/mgs;
@@ -100,14 +108,6 @@ function getFullDescription(givenDescription: string, callback: (...args:any[])=
 
   return fullDescription;
 }
-
-root.given.only = root.fgiven = function given(description: string, callback: (...args:any[])=>any) {
-  if (currentRunningFunction !== undefined) {
-    throw new Error(getOnlyOneError('given'));
-  }
-  
-  fit('GIVEN ' + description, getGivenCallbackWrapper(callback));
-};
 
 function getGivenCallbackWrapper(callback: (...args:any[])=>any) {
   return async function givenCallbackWrapper() {
