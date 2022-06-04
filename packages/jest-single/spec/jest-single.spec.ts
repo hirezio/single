@@ -182,6 +182,52 @@ describe('Jest Single', () => {
       }
     });
 
+    it('should handle promise errors thrown inside "when"', async () => {
+      let actualPromiseFromGiven: Promise<any> | undefined = undefined;
+      jest.spyOn(root, 'it').mockImplementation((desc: any, fn: any) => {
+        actualPromiseFromGiven = fn();
+      });
+
+      given('given', async () => {
+        when('when', async () => {
+          await Promise.resolve().then(() => {
+            throw new Error('FAKE ERROR');
+          })
+           
+        })
+      });
+      try {
+        await actualPromiseFromGiven;
+        
+      } catch (error: any) {
+        expect(error.message).toEqual('FAKE ERROR');
+      }
+    });
+
+    it('should handle promise errors thrown inside "then"', async () => {
+      let actualPromiseFromGiven: Promise<any> | undefined = undefined;
+      jest.spyOn(root, 'it').mockImplementation((desc: any, fn: any) => {
+        actualPromiseFromGiven = fn();
+      });
+
+      given('given', async () => {
+        when('when', async () => {
+          then('then', async () => {
+            await Promise.resolve().then(() => {
+              throw new Error('FAKE ERROR');
+            })
+            
+          })
+        })
+      });
+      try {
+        await actualPromiseFromGiven;
+        
+      } catch (error: any) {
+        expect(error.message).toEqual('FAKE ERROR');
+      }
+    });
+
     given('input is set to 1', () => {
       const fakeNumber = 1;
 

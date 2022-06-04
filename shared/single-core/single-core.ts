@@ -59,12 +59,14 @@ let currentRunningFunction: 'given' | 'when' | 'then' | undefined;
 let numberOfWhens: number;
 let numberOfThens: number;
 let doneFunctionIsSet: boolean = false;
+let innerPromiseQueue: Promise<any>[];
 
 beforeEach(function () {
   currentRunningFunction = undefined;
   numberOfWhens = 0;
   numberOfThens = 0;
   doneFunctionIsSet = false;
+  innerPromiseQueue = [];
 });
 
 root.given = function given(givenDescription: string, callback: (...args:any[])=>any) {
@@ -114,7 +116,15 @@ function getGivenCallbackWrapper(callback: (...args:any[])=>any) {
 
     currentRunningFunction = 'given';
     
-    await promisify(callback);
+    await promisify(callback); 
+      
+    if (innerPromiseQueue.length > 0) {
+      for (const promise of innerPromiseQueue) {
+        
+        await promise;
+        
+      }
+    }
 
   }
 }
@@ -142,9 +152,12 @@ root.when = function when(description: string, callback: (...args:any[])=>any) {
     const then = potentialPromise.then;
     /* istanbul ignore else */
     if (typeof then === 'function') {
-      then.call(potentialPromise, () => {
+      const whenPromise = then.call(potentialPromise, () => {
         currentRunningFunction = oldContext;
-      });
+      })
+
+      innerPromiseQueue.push(whenPromise);
+
     } else {
       /* istanbul ignore next */
       currentRunningFunction = oldContext;  
@@ -152,7 +165,6 @@ root.when = function when(description: string, callback: (...args:any[])=>any) {
   } else {
     currentRunningFunction = oldContext;
   }
-  
 };
 
 root.then = function then(description: string, callback: (...args:any[])=>any) {
@@ -173,9 +185,10 @@ root.then = function then(description: string, callback: (...args:any[])=>any) {
     const then = potentialPromise.then;
     /* istanbul ignore else */
     if (typeof then === 'function') {
-      then.call(potentialPromise, () => {
+      const thenPromise = then.call(potentialPromise, () => {
         currentRunningFunction = oldContext;
       });
+      innerPromiseQueue.push(thenPromise);
     } else {
       /* istanbul ignore next */
       currentRunningFunction = oldContext;  
