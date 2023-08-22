@@ -5,7 +5,11 @@ module.exports = {
   verbose: true,
   resetMocks: true,
   testEnvironment: 'node',
-  
+  transform: {
+    '^.+\\.[tj]s?$': ['ts-jest', {
+      tsconfig: '<rootDir>/packages/jest-single/tsconfig.json'
+    }]
+  },
   collectCoverage: true,
   coverageDirectory: 'packages/jest-single/coverage',
   coverageThreshold: {
@@ -15,10 +19,5 @@ module.exports = {
       lines: 90,
       statements: 90,
     },
-  },
-  globals: {
-    'ts-jest': {
-      tsconfig: '<rootDir>/packages/jest-single/tsconfig.json'
-    }
   }
 };
