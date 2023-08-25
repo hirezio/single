@@ -1,6 +1,6 @@
 {
   "name": "@hirez_io/jasmine-single",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org"
@@ -43,7 +43,7 @@
     "test": "echo \n*** Run tests from the root folder\n"
   },
   "dependencies": {
-    "@hirez_io/karma-jasmine-single": "^1.0.3"
+    "@hirez_io/karma-jasmine-single": "^1.0.4"
   },
   "peerDependencies": {
     "jasmine-core": "< 5.x"
