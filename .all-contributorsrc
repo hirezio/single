@@ -46,8 +46,19 @@
         "ideas",
         "maintenance"
       ]
+    },
+    {
+      "login": "awarrington0895",
+      "name": "Alex ",
+      "avatar_url": "https://avatars.githubusercontent.com/u/12807806?v=4",
+      "profile": "https://github.com/awarrington0895",
+      "contributions": [
+        "code",
+        "maintenance"
+      ]
     }
   ],
   "contributorsPerLine": 7,
-  "skipCi": true
+  "skipCi": true,
+  "commitType": "docs"
 }
